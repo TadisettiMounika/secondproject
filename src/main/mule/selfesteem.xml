@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="35b2fa15-cedd-4116-a359-15d04c18d248" >
+		<http:listener-connection host="0.0.0.0" port="8086" />
+	</http:listener-config>
+	<flow name="selfesteemFlow" doc:id="63bf6f05-c6ef-4975-ae1e-0eb7fc73fabd" >
+		<http:listener doc:name="Listener" doc:id="93bda8f0-6266-44a7-a507-7838b5e29323" config-ref="HTTP_Listener_config" path="/selfesteem"/>
+		<set-payload value='#["Hello are you confident"]' doc:name="Set Payload" doc:id="731f3561-c2a5-4eb1-8945-3e67ca3a44f9" />
+		<ee:transform doc:name="Transform Message" doc:id="75514740-799a-421b-8318-cc6a709cc58d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
